@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { customStyles } from "../../helpers/calendar-modal-style";
 import { useForm } from "../../hooks/useForm";
 import { uiCloseModal } from "../../actions/ui";
-import { addEvent, clearActiveEvent, updateEvent } from "../../actions/event";
+import { clearActiveEvent, eventStartAddNew, startUpdateEvent } from "../../actions/event";
 
 Modal.setAppElement("#root");
 
@@ -66,21 +66,13 @@ export const CalendarModal = () => {
         }
 
         if( activeEvent ){//Editar
-          console.log(inputValue)
-            dispatch( updateEvent( inputValue ) )
+            dispatch( startUpdateEvent( inputValue ) )
         }else{//Nuevo
-          dispatch( addEvent({
-            ...inputValue,
-            user: {
-              id: new Date().getTime(),
-              name: 'Camila'
-            }
-          }) )
+          dispatch( eventStartAddNew( inputValue ) )
         }
 
 
         setIsTitleValid(true)
-        console.log( inputValue )
     }
 
   const closeModal = () => {
